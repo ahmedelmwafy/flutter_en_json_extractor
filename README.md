@@ -1,40 +1,29 @@
-# Flutter String Localization Automation Script
+# Flutter Localization Extractor
 
-This script is a Dart-based command-line tool designed to help automate the process of internationalizing your Flutter application using popular localization packages like `localize_and_translate` or `easy_localization`.
-
-It finds hardcoded string literals in your Dart files within a **specified folder** inside `lib`, replaces them with localization keys followed by `.tr()`, and generates an `en.json` file where the original English strings serve as both the keys and the values.
+This Dart CLI tool scans your Flutter project's Dart files, extracts string literals, replaces them with localization calls using `.tr()`, and generates a JSON localization file (`en.json`) with the original strings as both keys and values.
 
 ## Features
 
-* Scans `.dart` files within a **single folder** inside the `lib` directory, specified by the user during runtime.
-* Identifies single-quoted (`'...'`) and double-quoted (`"..."`) string literals.
-* Replaces found strings like `"Hello World"` with `'Hello World'.tr()`.
-* **Uses the original string literal content directly as the localization key.**
-* Generates or updates `en.json` with entries like `"Hello World": "Hello World"`.
-* Adds the correct import statement (`localize_and_translate` or `easy_localization`) to modified files if missing, based on user selection.
-* Skips strings on import lines, empty strings, strings containing '/', and strings already followed by `.tr()`.
+✅ Automatically detects and processes Dart files in your `lib/` directory  
+✅ Skips strings in import statements, print/log calls, paths, and already localized strings  
+✅ Supports both `localize_and_translate` and `easy_localization` packages  
+✅ Automatically inserts the necessary import statement if missing  
+✅ Generates a clean, sorted `en.json` localization file  
 
-## Prerequisites
-
-* [Dart SDK](https://dart.dev/get-dart) installed.
-* A Flutter project where you want to apply localization.
-* You are using either the [`localize_and_translate`](https://pub.dev/packages/localize_and_translate) or [`easy_localization`](https://pub.dev/packages/easy_localization`) package in your project.
-* The script file (`your_script_name.dart`) placed in your project directory (e.g., at the root or in a `tool/` folder).
+---
 
 ## Installation
 
-1.  Save the provided Dart script code into a file (e.g., `auto_localize.dart`) within your Flutter project directory (e.g., project root, or a `tool/` subdirectory).
+You can include this script directly in your Flutter project (e.g., in a `tools/` folder), or install it as a package.
 
-## Configuration
+### Add to `pubspec.yaml`:
 
-Open the script file (`auto_localize.dart`) and modify the constants at the top if needed:
-
-* `searchDir`: The base directory to look for the user-specified folder within (defaults to `'lib'`).
-* `enJsonFile`: The name of the output JSON file (defaults to `'en.json'`). This file will be created/updated in the directory where you run the script (usually the project root).
-
-```dart
-// --- Configuration ---
-const String searchDir = 'lib';
-// The output file for the English localization keys and values.
-const String enJsonFile = 'en.json';
-// ----------------------
+```yaml
+dev_dependencies:
+  flutter_en_json_extractor: latest version
+    
+    
+    ```bash
+    # Run the package after adding it to pubspec.yaml
+    dart run flutter_en_json_extractor
+    ```

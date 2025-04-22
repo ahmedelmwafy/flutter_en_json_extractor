@@ -1,5 +1,5 @@
 name: flutter_en_json_extractor
-description: "A new Flutter package project."
+description: "A Flutter package for extracting and managing JSON localization files."
 version: 0.0.1
 homepage:
 
@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   path: ^1.8.0
-  localize_and_translate: ^6.0.8
 executables:
   flutter_ar_json_extractor: bin/extract_strings.dart # Maps the command name to the file
 

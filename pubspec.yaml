@@ -1,6 +1,6 @@
 name: flutter_en_json_extractor
 description: "A Flutter package for extracting and managing JSON localization files."
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/ahmedelmwafy/flutter_en_json_extractor
 
 environment:

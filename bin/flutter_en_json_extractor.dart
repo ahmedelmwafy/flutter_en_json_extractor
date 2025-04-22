@@ -4,8 +4,8 @@ import 'package:path/path.dart' as p;
 
 // --- Configuration ---
 const String searchDir = 'lib';
-// The output file for the English localization keys and values.
-const String enJsonFile = 'en.json';
+// Changed the output file path to the desired location
+const String enJsonFile = 'assets/lang/en.json';
 // ----------------------
 
 // Variables to be set based on user input
@@ -46,9 +46,6 @@ bool isFollowedByLocalizationSuffix(String content, int indexAfterMatch) {
     return false;
   }
   return content.substring(currentIndex, currentIndex + suffix.length) == suffix;
-
-  // If easy_localization ever uses a different default suffix, you would add logic here
-  // based on the chosen package. For now, .tr() is standard for both.
 }
 
 /// Checks if the string literal at matchIndex is within a print() or log() call.
@@ -182,7 +179,7 @@ void processAndModifyFile(String filePath) {
       // Use the extracted string value wrapped in single quotes.
       // **Important:** This assumes the stringValue itself does not contain unescaped single quotes.
       // A production script should escape `stringValue` before putting it in single quotes.
-       final replacementString = "'$stringValue'.tr()"; // e.g., 'Hello'.tr()
+       final replacementString = "'$stringValue'.tr();"; // Added semicolon as is common after .tr() call
 
       // Add content before the match to the buffer.
       modifiedContentBuffer.write(content.substring(lastIndex, matchIndex));
@@ -232,8 +229,16 @@ void processAndModifyFile(String filePath) {
 }
 
 /// Writes the extracted strings (used as keys) and themselves (as values) to the en.json file.
+/// Creates the target directory if it doesn't exist.
 void writeJsonFiles() {
   try {
+    // Ensure the target directory exists before writing the file
+    final outputDir = Directory(p.dirname(enJsonFile));
+    if (!outputDir.existsSync()) {
+        outputDir.createSync(recursive: true);
+        print('Created directory: ${outputDir.path}');
+    }
+
     // Create a map for the English JSON file: original_string -> original_string.
     final Map<String, String> enJson = {};
     uniqueStrings.forEach((stringValue) {
